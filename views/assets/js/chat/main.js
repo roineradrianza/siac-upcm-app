@@ -5,6 +5,7 @@ let vm = new Vue({
   el: '#siac-suite-container',
   data: {
     uid: uid,
+    group_id_by_url: new URLSearchParams(window.location.search).get('group'),
     search_member: '',
     search_external_member: '',
     is_opened: false,
@@ -144,6 +145,11 @@ let vm = new Vue({
       app.$http.get(url).then(res => {
         if (res.body.length > 0) {
           app.group_chats = res.body
+          if (app.group_id_by_url != null) {
+            var group_chat = app.group_chats.find( e => e.group_id == app.group_id_by_url)
+            console.log(app.group_chats.indexOf(group_chat))
+            group_chat != null ? app.openGroupChat(group_chat) : ''
+          }
         }
       }, err => {
 

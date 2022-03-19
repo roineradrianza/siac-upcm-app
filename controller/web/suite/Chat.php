@@ -12,7 +12,7 @@ class Chat extends Routes
             ['name' => 'lib/lodash.min'],
             ['name' => 'lib/viewer.min'],
             ['name' => 'lib/moment.min'],
-            ['name' => 'chat/main-v1.0.0.min', 'version' => '1.0.0'],
+            ['name' => 'chat/main.min', 'version' => '1.0.0'],
         ];
         $this->styles = [
             ['name' => 'viewer.min'],

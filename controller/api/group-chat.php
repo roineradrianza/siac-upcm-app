@@ -98,7 +98,7 @@ switch ($method) {
             $helper->response_message('Éxito', 'No se pudo añadir al grupo correctamente', 'error');
         }
 
-        $helper->response_message('Éxito', 'Se añadió al grupo correctamente');
+        $helper->response_message('Éxito', 'Se añadió al grupo correctamente', 'success', $data['group_id']);
         break;
 
     case 'send-message':

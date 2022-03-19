@@ -36,6 +36,7 @@ class Routes extends AccessControl
             ];
             $args = [];
             switch (count($route)) {
+
                 case 1:
                     $Class = empty($Class) ? 'Home' : $Class;
                     $controller_route = "$dir$Class.php";
@@ -52,7 +53,7 @@ class Routes extends AccessControl
                     break;
 
                 case 2:
-                    if (empty($route[1]) || str_contains($route[1], '?')) {
+                    if (empty($route[1]) && empty($_GET)) {
                         $Class = Helper::convert_first_letter_uppercase($route[0]);
                         $controller_route = "$dir/$Class.php";
                         $this->render_web_404($controller_route);
@@ -63,6 +64,7 @@ class Routes extends AccessControl
                             $args['query'] = $route[1];
                             $controller_route = "$dir$Class.php";
                         } else {
+                            $Class = !empty($_GET) ? Helper::convert_first_letter_uppercase(explode('?', $route[1])[0]) : $Class;
                             $controller_route = "$dir$route[0]/$Class.php";
                         }
                         $this->render_web_404($controller_route);

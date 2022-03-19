@@ -10,14 +10,13 @@
                     <v-row>
 
                         <v-col cols="12" md="6" lg="5">
-                            <?php if (!empty($can_manage_suite) || !empty($access['notifications_access']['publish']) ) : ?>
-                            <v-btn class="rounded-pill secondary white--text py-6 mb-sm-4 mb-lg-0"
-                                @click="editItem(defaultItem)">
-                                <v-icon>mdi-plus</v-icon> Añadir anuncio
-                            </v-btn>
-                            <v-btn class="rounded-pill secondary white--text py-6"
-                                @click="switchAnnouncenments(<?php echo $_SESSION['user_id'] ?>)">
-                                {{ announcementBtnTitle }}</v-btn>
+                            <?php if (!empty($can_manage_suite) || !empty($access['notifications_access']['publish'])) : ?>
+                                <v-btn class="rounded-pill secondary white--text py-6 mb-sm-4 mb-lg-0" @click="editItem(defaultItem)">
+                                    <v-icon>mdi-plus</v-icon> Añadir anuncio
+                                </v-btn>
+                                <v-btn class="rounded-pill secondary white--text py-6" @click="switchAnnouncenments(<?php echo $_SESSION['user_id'] ?>)">
+                                    {{ announcementBtnTitle }}
+                                </v-btn>
                             <?php endif ?>
                         </v-col>
                         <v-col cols="12" md="6" lg="5">
@@ -58,8 +57,7 @@
                                         </v-col>
                                         <v-col cols="12" md="12" class="py-3 mt-n3 d-flex justify-center align-center">
                                             <v-avatar class="mr-2" size="5vw">
-                                                <img :src="'<?php echo SITE_URL ?>/public/img/avatars/'+author.avatar"
-                                                    v-if="author.avatar != null">
+                                                <img :src="'<?php echo SITE_URL ?>/public/img/avatars/'+author.avatar" v-if="author.avatar != null">
                                                 <v-icon style="font-size: 5vw" v-else>mdi-account-circle</v-icon>
                                             </v-avatar>
                                             <p>
@@ -69,16 +67,15 @@
                                             </p>
                                         </v-col>
                                         <v-col cols="12" md="12" class="py-3 mt-n3 d-flex justify-end">
-                                            <v-icon class="grey--text grey-lighten-1">mdi-timer</v-icon><span
-                                                class="body-1 grey--text grey-lighten-1">{{ fromNow(editedItem.published_at) }}</span>
+                                            <v-icon class="grey--text grey-lighten-1">mdi-timer</v-icon><span class="body-1 grey--text grey-lighten-1">{{ fromNow(editedItem.published_at) }}</span>
                                         </v-col>
                                         <v-col cols="12">
-                                            <v-btn color="secondary" v-if="author.user_member == null" @click="joinChat"
-                                                :loading="join_loading" block>
+                                            <v-btn color="secondary" v-if="author.user_member == null" @click="joinChat" :loading="join_loading" block>
                                                 Unirse a la discusión
                                             </v-btn>
-                                            <v-btn class="white--text" color="#00BFA5" v-if="author.user_member == uid"
-                                                block>
+                                            <v-btn 
+                                            :href="'<?= SITE_URL ?>/suite/chat?group=' + editedItem.group_chat" 
+                                            class="white--text" color="#00BFA5" v-if="author.user_member == uid" block>
                                                 Ya te has unido a esta discusión
                                             </v-btn>
                                         </v-col>
@@ -110,36 +107,28 @@
                                             </v-col>
                                             <v-col cols="12">
                                                 <label>Contenido</label>
-                                                <vue-editor class="mt-3" v-model="editedItem.content"
-                                                    placeholder="Contenido del anuncio"></vue-editor>
+                                                <vue-editor class="mt-3" v-model="editedItem.content" placeholder="Contenido del anuncio"></vue-editor>
                                             </v-col>
                                             <v-col cols="12">
                                                 <label>Enviar a</label>
-                                                <v-select class="mt-3" v-model="editedItem.send_to"
-                                                    :items="send_to_options" @change="clearSendToInputs" outlined>
+                                                <v-select class="mt-3" v-model="editedItem.send_to" :items="send_to_options" @change="clearSendToInputs" outlined>
                                                 </v-select>
                                             </v-col>
                                             <template v-if="parseInt(editedItem.send_to) == 2">
                                                 <v-col cols="12">
                                                     <label>Seleccione los miembros</label>
-                                                    <v-select class="mt-3" v-model="editedItem.members"
-                                                        :items="my_upcm_members.items"
-                                                        :loading="my_upcm_members.loading" multiple outlined>
+                                                    <v-select class="mt-3" v-model="editedItem.members" :items="my_upcm_members.items" :loading="my_upcm_members.loading" multiple outlined>
                                                     </v-select>
                                                 </v-col>
                                             </template>
                                             <template v-if="parseInt(editedItem.send_to) == 3">
                                                 <v-col cols="12">
                                                     <label>Seleccione la unidad</label>
-                                                    <v-select class="mt-3" v-model="editedItem.upcms"
-                                                        :items="upcms.filtered_items" loading="upcms.loading" multiple
-                                                        outlined>
+                                                    <v-select class="mt-3" v-model="editedItem.upcms" :items="upcms.filtered_items" loading="upcms.loading" multiple outlined>
                                                         <template #prepend-item>
                                                             <v-list-item>
                                                                 <v-list-item-content>
-                                                                    <v-text-field v-model="upcms.search"
-                                                                        placeholder="Buscar unidad" @input="searchUPCMS"
-                                                                        clearable outlined></v-text-field>
+                                                                    <v-text-field v-model="upcms.search" placeholder="Buscar unidad" @input="searchUPCMS" clearable outlined></v-text-field>
                                                                 </v-list-item-content>
                                                             </v-list-item>
                                                             <v-divider class="mt-2"></v-divider>
@@ -150,15 +139,11 @@
                                             <template v-if="parseInt(editedItem.send_to) == 4">
                                                 <v-col cols="12">
                                                     <label>Seleccione la unidad</label>
-                                                    <v-select class="mt-3" v-model="editedItem.upcm_id"
-                                                        :items="upcms.filtered_items" loading="upcms.loading"
-                                                        @change="getExternalUPCMMembers" outlined>
+                                                    <v-select class="mt-3" v-model="editedItem.upcm_id" :items="upcms.filtered_items" loading="upcms.loading" @change="getExternalUPCMMembers" outlined>
                                                         <template #prepend-item>
                                                             <v-list-item>
                                                                 <v-list-item-content>
-                                                                    <v-text-field v-model="upcms.search"
-                                                                        placeholder="Buscar unidad" @input="searchUPCMS"
-                                                                        clearable outlined></v-text-field>
+                                                                    <v-text-field v-model="upcms.search" placeholder="Buscar unidad" @input="searchUPCMS" clearable outlined></v-text-field>
                                                                 </v-list-item-content>
                                                             </v-list-item>
                                                             <v-divider class="mt-2"></v-divider>
@@ -167,9 +152,7 @@
                                                 </v-col>
                                                 <v-col cols="12" v-if="editedItem.upcm_id != ''">
                                                     <label>Seleccione los miembros</label>
-                                                    <v-select class="mt-3" v-model="editedItem.members"
-                                                        :items="external_upcm_members.items"
-                                                        loading="external_upcm_members.loading" multiple outlined>
+                                                    <v-select class="mt-3" v-model="editedItem.members" :items="external_upcm_members.items" loading="external_upcm_members.loading" multiple outlined>
                                                     </v-select>
                                                 </v-col>
                                             </template>
@@ -209,22 +192,17 @@
                                 </v-card-text>
 
                                 <v-card-actions class="mb-3">
-                                    <v-btn class="mx-auto white--text subtitle-2 py-4 px-8" color="#c6c6c6"
-                                        v-on:click="get_announcement(item)">
+                                    <v-btn class="mx-auto white--text subtitle-2 py-4 px-8" color="#c6c6c6" v-on:click="get_announcement(item)">
                                         Leer más
                                     </v-btn>
                                 </v-card-actions>
                                 <v-card-actions class="annoucement-info pb-1">
                                     <div class="px-2">
-                                        <v-icon class="green--text"
-                                            @click="editItem(item);parseInt(item.send_to) == 4 ? getExternalUPCMMembers() : '';"
-                                            v-if="item.user_id == <?php echo $_SESSION['user_id'] ?>">mdi-pencil
+                                        <v-icon class="green--text" @click="editItem(item);parseInt(item.send_to) == 4 ? getExternalUPCMMembers() : '';" v-if="item.user_id == <?php echo $_SESSION['user_id'] ?>">mdi-pencil
                                         </v-icon>
-                                        <v-icon class="red--text" @click="deleteItem(item)"
-                                            v-if="item.user_id == <?php echo $_SESSION['user_id'] ?>">mdi-trash-can
+                                        <v-icon class="red--text" @click="deleteItem(item)" v-if="item.user_id == <?php echo $_SESSION['user_id'] ?>">mdi-trash-can
                                         </v-icon>
-                                        <span
-                                            class="body-1 grey--text grey-lighten-1 float-right">{{ fromNow(item.published_at) }}</span>
+                                        <span class="body-1 grey--text grey-lighten-1 float-right">{{ fromNow(item.published_at) }}</span>
                                     </div>
                                 </v-card-actions>
                             </v-card>

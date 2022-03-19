@@ -185,7 +185,7 @@ let vm = new Vue({
         app.join_loading = false
         if (res.body.status == 'success') {
           app.author.user_member = uid
-          window.open(window.location.origin + '/suite/chat/', '_blank');
+          window.open(window.location.origin + '/suite/chat?group=' + res.body.data, '_blank');
         }
       }, err => {
 
