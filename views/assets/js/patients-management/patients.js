@@ -3568,6 +3568,7 @@ let vm = new Vue({
       app.general_save = false
 
       var obj = app.patient_appointments
+      obj.appointments = []
       app.getDoctors()
       if (obj.appointments.length == 0 || obj.appointments.length > 0 && app.editedItem.patient_id == obj.appointments[0].patient_id) {
         obj.current_appointment = {}
@@ -3577,7 +3578,7 @@ let vm = new Vue({
         app.$http.get(url).then(res => {
           if (res.body.length > 0) {
             obj.appointments = res.body
-            var filtered_appointment = appointment_id !== undefined ?
+            var filtered_appointment = appointment_id > 0 ?
               obj.appointments.find(e => e.appointment_id == appointment_id) : {}
             var total_length = obj.appointments.length
             var current_appointment_i = Object.keys(filtered_appointment).length > 0 ? filtered_appointment : obj.appointments[total_length - 1]
@@ -3588,7 +3589,7 @@ let vm = new Vue({
               previous_appointment_i.patient_id = app.editedItem.patient_id
               obj.previous_appointment = previous_appointment_i
             }
-            obj.current_appointment = appointment_id !== undefined ?
+            obj.current_appointment = appointment_id > 0 ?
               obj.appointments.find(e => e.appointment_id == appointment_id) : current_appointment_i
           }
         }, err => {
