@@ -10,7 +10,7 @@ class Articles extends Routes
         $panel->checkAccess();
         $this->scripts = [
             ['name' => 'vue-components/vue2-editor.min'],
-            ['name' => 'admin/articles', 'version' => '1.0.0'],
+            ['name' => 'admin/articles.min', 'version' => '1.0.0'],
         ];
         $this->content = new Template("admin/articles");
         $this->title = 'Administración - Artículos';
