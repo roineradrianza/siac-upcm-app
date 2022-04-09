@@ -12,7 +12,7 @@
     <link href="<?php echo SITE_URL ?>/public/css/app.min.css" rel="stylesheet">
     <?php if (!empty($data['styles'])): ?>
     <?php foreach ($data['styles'] as $style): ?>
-    <link href="<?php echo SITE_URL ?>/views/assets/css/<?php echo $style['name']; ?>.css" rel="stylesheet">
+    <link href="<?php echo SITE_URL ?>/public/assets/css/<?php echo $style['name']; ?>.css" rel="stylesheet">
 
     <?php endforeach?>
     <?php endif?>
@@ -47,11 +47,11 @@
     <script src="<?php echo SITE_URL ?>/public/js/Classes/http.min.js"></script>
     <?php if (!empty($data['scripts'])): ?>
     <?php foreach ($data['scripts'] as $script): ?>
-    <script src="<?php echo SITE_URL ?>/views/assets/js/<?php echo $script['name'] ?>.js<?php echo !empty($script['version']) ? "?v={$script['version']}" : '' ?>">
+    <script src="<?php echo SITE_URL ?>/public/assets/js/<?php echo $script['name'] ?>.js<?php echo !empty($script['version']) ? "?v={$script['version']}" : '' ?>">
     </script>
     <?php endforeach?>
     <?php else: ?>
-    <script src="<?php echo SITE_URL ?>/views/assets/js/dashboard.js"></script>
+    <script src="<?php echo SITE_URL ?>/public/assets/js/dashboard.js"></script>
     <?php endif?>
 </body>
 
